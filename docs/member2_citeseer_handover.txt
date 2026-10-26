@@ -1,0 +1,25 @@
+# Handover Notes - Member 2 (CiteSeer Experiments)
+Project: BME GNN Link Prediction Task
+Author: İlknur Pehlivan (Member 2)
+Environment: Google Colab, Python, PyTorch, PyTorch Geometric
+
+## File Location & Outputs
+Root path: /content/drive/MyDrive/BME_GNN_LinkPred
+Output Files:
+1. member2_citeseer_summary.xlsx : Summary statistics (Mean ± Std) for GAE and VGAE models on CiteSeer (10 independent runs)
+2. member2_citeseer_handover.txt: Handover notes for Member 2's dataset contribution
+
+## Scope & Contribution
+- Executed 10 independent runs of GAE (Graph Autoencoder) and VGAE (Variational Graph Autoencoder) models on the CiteSeer dataset.
+- Evaluated performance using AUC (Area Under ROC Curve) and AP (Average Precision) metrics to minimize random split bias.
+- Kept output files isolated from Member 1's Cora results to prevent data overwrite.
+
+## Model Parameters
+- num_runs: 10
+- epochs: 200
+- out_channels: 16
+- lr: 0.01
+
+## Results Summary (CiteSeer - 10 Independent Runs)
+- GAE on CiteSeer  | AUC: 87.80 ± 1.37%, AP: 88.26 ± 1.30%
+- VGAE on CiteSeer | AUC: 79.43 ± 3.32%, AP: 80.32 ± 2.90%
