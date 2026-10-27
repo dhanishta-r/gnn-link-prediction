@@ -157,9 +157,9 @@ The notebook uses a vectorised sparse-matrix implementation, verified to give id
 
 | Member | Role | Contribution |
 |---|---|---|
-| Member 1: Song Ma | Setup and heuristic baseline | Environment setup, `autoencoder.py` pipeline, Common Neighbors / Adamic–Adar implementation (`baseline.py`), first Cora runs |
-| Member 2: İlknur Pehlivan | Small-dataset experiments | GAE and VGAE on CiteSeer (10 runs), handover notes |
-| Member 3: Bhuwaneshwaree Ragavan | Large dataset and aggregation | PubMed experiments; final 10-run pipeline with all models on identical splits for all datasets; aggregation, results table and paper comparison |
+| Member 1: Song Ma - SAGUWI | Setup and heuristic baseline | Environment setup, `autoencoder.py` pipeline, Common Neighbors / Adamic–Adar implementation (`baseline.py`), first Cora runs |
+| Member 2: İlknur Pehlivan - JE5XG1 | Small-dataset experiments | GAE and VGAE on CiteSeer (10 runs), handover notes |
+| Member 3: Bhuwaneshwaree Ragavan - EWX1Q5 | Large dataset and aggregation | PubMed experiments; final 10-run pipeline with all models on identical splits for all datasets; aggregation, results table and paper comparison |
 
 ---
 
