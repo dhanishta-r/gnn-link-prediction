@@ -3,7 +3,7 @@
 Group project for the Deep Learning course at BME (Budapest University of Technology and Economics).
 
 ## Team
-
+**Team name:** TCM Dynamics
 
 | Name | Neptune code |
 |---|---|
