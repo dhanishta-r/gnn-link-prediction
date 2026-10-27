@@ -2,6 +2,17 @@
 
 Group project for the Deep Learning course at BME (Budapest University of Technology and Economics).
 
+## Team
+
+
+| Name | Neptune code |
+|---|---|
+| Song Ma | SAGUWI |
+| İlknur Pehlivan | JE5XG1  |
+| Bhuwaneshwaree Ragavan | EWX1Q5 |
+
+## Project description
+
 **Link prediction** means guessing which missing connections exist in a network, as used in friend and product recommendation, citation suggestion and drug-interaction discovery. Many papers report that graph neural networks (GNNs) beat simple rules, but the [HeaRT study (NeurIPS 2023)](https://arxiv.org/abs/2306.10453) found problems in how these comparisons were made: baselines performing below their real level, inconsistent data splits, and test examples that were too easy.
 
 Our question: **when do GNNs really win?**
@@ -41,25 +52,38 @@ Mean ± standard deviation over 10 random edge splits, in %. All models are eval
 
 ---
 
-## Repository structure
+## Files in the repository
 
 ```
 .
 ├── README.md
 ├── requirements.txt
+├── .gitignore
 ├── notebooks/
-│   └── member3_pubmed_and_aggregation.ipynb   # main pipeline: all runs + aggregation (run in Colab)
+│   └── pubmed_and_aggregation.ipynb
 ├── src/
-│   ├── autoencoder.py      # official PyG example (GAE / VGAE), unmodified
-│   └── baseline.py         # Common Neighbors and Adamic-Adar (Member 1)
+│   ├── autoencoder.py
+│   └── baseline.py
 ├── results/
-│   ├── raw_results.csv     # 120 rows: dataset, model, run, seed, auc, ap
-│   └── summary_results.csv # mean ± std per dataset and model, with paper targets
+│   ├── raw_results.csv
+│   └── summary_results.csv
 ├── report/
-│   └── Experiment_Report.docx   # Milestone 1 group report
+│   └── Experiment_Report.docx
 └── docs/
     └── member2_citeseer_handover.txt
 ```
+
+| File | What it does |
+|---|---|
+| `notebooks/pubmed_and_aggregation.ipynb` | **Main solution.** Installs PyTorch Geometric, creates 10 random edge splits per dataset, checks that no test edge leaks into training, trains GAE and VGAE, scores Common Neighbors and Adamic–Adar on the same test edges, then computes mean ± std and compares every result with the paper. |
+| `src/autoencoder.py` | The official PyTorch Geometric GAE / VGAE example, unmodified. The notebook uses its model code; it can also be run on its own for a single run. |
+| `src/baseline.py` | Member 1's original Common Neighbors and Adamic–Adar implementation (set-based). The notebook contains an equivalent vectorised version that runs on the same splits as the GNNs. |
+| `results/raw_results.csv` | All 120 individual runs: dataset, model, run number, seed, AUC and AP. |
+| `results/summary_results.csv` | Mean and standard deviation per dataset and model, with the paper's targets, the difference to them and whether each result is reproduced. |
+| `report/Experiment_Report.docx` | The Milestone 1 group report with all tables and the discussion of the results. |
+| `docs/member2_citeseer_handover.txt` | Member 2's handover notes from the first CiteSeer experiments. |
+| `requirements.txt` | Python packages needed to run the code locally. |
+| `.gitignore` | Keeps downloaded datasets, caches and checkpoints out of the repository. |
 
 ---
 
@@ -67,7 +91,7 @@ Mean ± standard deviation over 10 random edge splits, in %. All models are eval
 
 ### Option A: Google Colab (recommended)
 
-1. Open [`notebooks/member3_pubmed_and_aggregation.ipynb`](notebooks/member3_pubmed_and_aggregation.ipynb) in Colab (**File → Upload notebook**, or open it from GitHub).
+1. Open the notebook **[`notebooks/pubmed_and_aggregation.ipynb`](notebooks/pubmed_and_aggregation.ipynb)** in Colab (**File → Upload notebook**, or open it from GitHub).
 2. Select a GPU: **Runtime → Change runtime type → T4 GPU**.
 3. Run **Runtime → Run all**.
 
@@ -153,13 +177,13 @@ The notebook uses a vectorised sparse-matrix implementation, verified to give id
 
 ---
 
-## Team
+## Contributions
 
 | Member | Role | Contribution |
 |---|---|---|
-| Member 1: Song Ma - SAGUWI | Setup and heuristic baseline | Environment setup, `autoencoder.py` pipeline, Common Neighbors / Adamic–Adar implementation (`baseline.py`), first Cora runs |
-| Member 2: İlknur Pehlivan - JE5XG1 | Small-dataset experiments | GAE and VGAE on CiteSeer (10 runs), handover notes |
-| Member 3: Bhuwaneshwaree Ragavan - EWX1Q5 | Large dataset and aggregation | PubMed experiments; final 10-run pipeline with all models on identical splits for all datasets; aggregation, results table and paper comparison |
+| Member 1: Song Ma | Setup and heuristic baseline | Environment setup, `autoencoder.py` pipeline, Common Neighbors / Adamic–Adar implementation (`baseline.py`), first Cora runs |
+| Member 2: İlknur Pehlivan | Small-dataset experiments | GAE and VGAE on CiteSeer (10 runs), handover notes |
+| Member 3: Bhuwaneshwaree Ragavan | Large dataset and aggregation | PubMed experiments; final 10-run pipeline with all models on identical splits for all datasets; aggregation, results table and paper comparison |
 
 ---
 
