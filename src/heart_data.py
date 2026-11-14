@@ -243,32 +243,55 @@ def _pair_keys(edges: np.ndarray, num_nodes: int) -> np.ndarray:
 def check_no_leak(data: LinkData, verbose: bool = True) -> dict:
     """Check that nothing used for validation or testing is visible in training.
 
-    Raises AssertionError if a validation or test positive is in the training
-    graph, or if the validation and test positives overlap. Also reports how
-    many negatives are in fact training edges (HeaRT allows none on these
-    datasets, so this should be 0).
+    Must be 0 (AssertionError otherwise):
+      - validation or test positives that are in the training graph
+      - validation positives that are also test positives
+      - any negative that is a training edge
+      - any test negative that is a validation edge
+      - any easy negative that is a real edge
+
+    Reported but allowed: hard negatives that are held-out true edges. HeaRT
+    only filters the edges that are known at that stage (training edges for
+    validation; training + validation edges for testing), so a small number of
+    its hard negatives are in fact other validation or test positives. Removing
+    them would use knowledge of the test set, so we keep them as HeaRT ships
+    them (see heart_negatives/create_heart_negatives.py in the HeaRT repository).
     """
     n = data.num_nodes
     train = np.unique(_pair_keys(data.train_pos, n))
     valid = np.unique(_pair_keys(data.valid_pos, n))
     test = np.unique(_pair_keys(data.test_pos, n))
-    report = {
+    known = {"train": train, "valid": valid, "test": test}
+
+    must_be_zero = {
         "valid_pos_in_train": int(np.isin(valid, train).sum()),
         "test_pos_in_train": int(np.isin(test, train).sum()),
         "valid_pos_in_test": int(np.isin(valid, test).sum()),
     }
-    all_pos = np.concatenate([train, valid, test])
-    for s in ("valid", "test"):
-        report[f"easy_{s}_neg_that_are_real_edges"] = int(np.isin(_pair_keys(data.easy_neg[s], n), all_pos).sum())
-        report[f"hard_{s}_neg_that_are_real_edges"] = int(np.isin(_pair_keys(data.hard_neg[s], n), all_pos).sum())
+    allowed = {}
+    for kind, negs in (("easy", data.easy_neg), ("hard", data.hard_neg)):
+        for s in ("valid", "test"):
+            keys = _pair_keys(negs[s], n)
+            for part in ("train", "valid", "test"):
+                count = int(np.isin(keys, known[part]).sum())
+                label = f"{kind}_{s}_neg_in_{part}"
+                held_out = (s == "valid" and part in ("valid", "test")) or (s == "test" and part == "test")
+                if kind == "hard" and held_out:
+                    allowed[label] = count
+                else:
+                    must_be_zero[label] = count
     if verbose:
         print(f"Leak check for {data.name}:")
-        for k, v in report.items():
-            print(f"  {k:36s} {v}")
-    assert report["valid_pos_in_train"] == 0, "validation edges are in the training graph"
-    assert report["test_pos_in_train"] == 0, "test edges are in the training graph"
-    assert report["valid_pos_in_test"] == 0, "validation and test edges overlap"
-    return report
+        print("  must be 0:")
+        for k, v in must_be_zero.items():
+            print(f"    {k:28s} {v}")
+        print("  allowed (hard negatives that are held-out true edges, kept as HeaRT ships them):")
+        for k, v in allowed.items():
+            total = data.hard_neg[k.split("_")[1]].shape[0] * data.hard_neg[k.split("_")[1]].shape[1]
+            print(f"    {k:28s} {v}  ({100 * v / total:.2f}% of {total})")
+    bad = {k: v for k, v in must_be_zero.items() if v != 0}
+    assert not bad, f"Leak check failed for {data.name}: {bad}"
+    return {**must_be_zero, **allowed}
 
 
 if __name__ == "__main__":
