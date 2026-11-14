@@ -24,7 +24,7 @@ Usage
 
     rows = evaluate_model(score_fn, data, split="valid")   # tuning
     rows = evaluate_model(score_fn, data, split="test")    # final numbers only
-    append_results("results/m2/raw_results.csv", rows, dataset=data.name,
+    append_results("results/m2/raw_baselines.csv", rows, dataset=data.name,
                    model="GAE", config="lr=0.01,hidden=32", seed=0, member="C")
 """
 
