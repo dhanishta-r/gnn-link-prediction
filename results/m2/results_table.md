@@ -7,16 +7,41 @@ Test results, mean ± standard deviation over seeds, in %. Easy = random negativ
 | Cora | CN | default | 70.85 ± 0.00 | 70.59 ± 0.00 | 9.78 ± 0.00 | 20.11 ± 0.00 | 1 |
 | Cora | AA | default | 70.96 ± 0.00 | 71.16 ± 0.00 | 11.91 ± 0.00 | 24.10 ± 0.00 | 1 |
 | Cora | GAE | default | 90.64 ± 0.49 | 90.87 ± 0.43 | 5.69 ± 0.34 | 12.26 ± 0.96 | 10 |
+| Cora | GAE | tuned | 87.30 ± 1.26 | 87.21 ± 1.37 | 2.97 ± 0.23 | 5.12 ± 0.75 | 10 |
 | Cora | VGAE | default | 88.72 ± 0.66 | 88.97 ± 0.63 | 4.19 ± 0.30 | 9.30 ± 1.50 | 10 |
+| Cora | VGAE | tuned | 85.47 ± 2.18 | 85.24 ± 2.19 | 2.72 ± 0.41 | 4.82 ± 0.79 | 10 |
+| Cora | SEAL | tuned | 80.42 ± 1.42 | 84.22 ± 0.76 | 10.94 ± 1.09 | 22.35 ± 1.78 | 10 |
 | CiteSeer | CN | default | 67.49 ± 0.00 | 67.45 ± 0.00 | 8.42 ± 0.00 | 18.68 ± 0.00 | 1 |
 | CiteSeer | AA | default | 67.49 ± 0.00 | 67.48 ± 0.00 | 10.82 ± 0.00 | 22.20 ± 0.00 | 1 |
 | CiteSeer | GAE | default | 89.27 ± 0.94 | 90.46 ± 0.83 | 7.24 ± 0.69 | 18.66 ± 1.49 | 10 |
+| CiteSeer | GAE | tuned | 81.43 ± 0.11 | 82.15 ± 0.12 | 1.86 ± 0.52 | 2.09 ± 1.22 | 10 |
 | CiteSeer | VGAE | default | 87.36 ± 1.40 | 88.31 ± 1.38 | 4.72 ± 0.86 | 11.03 ± 3.48 | 10 |
+| CiteSeer | VGAE | tuned | 79.64 ± 2.68 | 80.61 ± 2.40 | 1.87 ± 0.44 | 2.37 ± 1.23 | 10 |
+| CiteSeer | SEAL | tuned | 79.95 ± 1.80 | 83.20 ± 1.64 | 8.71 ± 1.13 | 18.66 ± 0.95 | 10 |
 | PubMed | CN | default | 63.90 ± 0.00 | 63.87 ± 0.00 | 2.28 ± 0.00 | 4.78 ± 0.00 | 1 |
 | PubMed | AA | default | 63.90 ± 0.00 | 63.90 ± 0.00 | 2.63 ± 0.00 | 5.51 ± 0.00 | 1 |
 | PubMed | GAE | default | 96.54 ± 0.19 | 96.78 ± 0.17 | 2.82 ± 0.14 | 3.78 ± 0.46 | 10 |
+| PubMed | GAE | tuned | 95.12 ± 0.28 | 95.38 ± 0.26 | 2.42 ± 0.08 | 2.16 ± 0.28 | 10 |
 | PubMed | VGAE | default | 94.84 ± 0.37 | 95.11 ± 0.33 | 2.46 ± 0.08 | 2.80 ± 0.21 | 10 |
+| PubMed | VGAE | tuned | 94.78 ± 0.13 | 95.03 ± 0.11 | 2.41 ± 0.03 | 2.41 ± 0.07 | 10 |
 
 Tuned configurations, chosen on the validation set only (AUC in the easy setting, MRR in the HeaRT setting):
 
-_No tuned configurations yet._
+| Dataset | Model | Setting | Chosen configuration | Validation score |
+|---|---|---|---|---|
+| Cora | GAE | easy | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 85.97 (AUC) |
+| Cora | GAE | heart | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 3.21 (MRR) |
+| Cora | VGAE | easy | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 84.81 (AUC) |
+| Cora | VGAE | heart | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 3.03 (MRR) |
+| CiteSeer | GAE | easy | `hidden=16,out=8,lr=0.001,epochs=400,wd=0.0001` | 80.42 (AUC) |
+| CiteSeer | GAE | heart | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 1.81 (MRR) |
+| CiteSeer | VGAE | easy | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 79.39 (AUC) |
+| CiteSeer | VGAE | heart | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 1.81 (MRR) |
+| PubMed | GAE | easy | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 95.10 (AUC) |
+| PubMed | GAE | heart | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 2.24 (MRR) |
+| PubMed | VGAE | easy | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 94.78 (AUC) |
+| PubMed | VGAE | heart | `hidden=64,out=32,lr=0.01,epochs=400,wd=0.0001` | 2.24 (MRR) |
+| Cora | SEAL | easy | `hops=1,hidden=32,lr=0.001,drop=0.5,ep=15` | 80.29 (AUC) |
+| Cora | SEAL | heart | `hops=1,hidden=32,lr=0.001,drop=0.5,ep=15` | 12.77 (MRR) |
+| CiteSeer | SEAL | easy | `hops=1,hidden=32,lr=0.0005,drop=0.5,ep=15` | 79.51 (AUC) |
+| CiteSeer | SEAL | heart | `hops=1,hidden=32,lr=0.0005,drop=0.5,ep=15` | 9.13 (MRR) |
